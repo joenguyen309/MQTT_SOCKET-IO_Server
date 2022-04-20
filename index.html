@@ -1,140 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Data</title>
-    <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
-    <script src="./client.js"></script>></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
     <script src="socket.io/socket.io.js"></script>
-    
-    <script>
-        window.onload = function () {
-        
-        var dataPoints1 = [];
-        var dataPoints2 = [];
-        var socket = io(); 
-        
-        var chart = new CanvasJS.Chart("chartContainer", {
-            zoomEnabled: true,
-            title: {
-                text: "Humidity and Temperature"
-            },
-            axisX: {
-                title: "chart updates every 2 secs"
-            },
-            axisY:{
-                prefix: ""
-            }, 
-            toolTip: {
-                shared: true
-            },
-            legend: {
-                cursor:"pointer",
-                verticalAlign: "top",
-                fontSize: 22,
-                fontColor: "dimGrey",
-                itemclick : toggleDataSeries
-            },
-            data: [{ 
-                type: "line",
-                xValueType: "dateTime",
-                yValueFormatString: "##.##",
-                xValueFormatString: "hh:mm:ss TT",
-                showInLegend: true,
-                name: "Temperature",
-                dataPoints: dataPoints1
-                },
-                {				
-                    type: "line",
-                    xValueType: "dateTime",
-                    yValueFormatString: "##.##",
-                    showInLegend: true,
-                    name: "Humidity" ,
-                    dataPoints: dataPoints2
-                }]
-        });
-        
-        function toggleDataSeries(e) {
-            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                e.dataSeries.visible = false;
-            }
-            else {
-                e.dataSeries.visible = true;
-            }
-            chart.render();
-        }
-        
-        var updateInterval = 1000;
-        // initial value
-        var yValue1; 
-        var yValue2;
-        
-        var time = new Date;
-        // starting at 9.30 am
-        time.getHours();
-        time.getMinutes();
-        time.getSeconds();
-        time.getMilliseconds();
-        
-        function updateChart(count) {
 
-            count = count || 1;
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            var deltaY1, deltaY2;
+    <script src="./client.js"></script>
 
-            for (var i = 0; i < count; i++) {
-                time.setTime(time.getTime()+ updateInterval)
+    <title>Document</title>
+  </head>
 
-            // socket.on('send_server', function (data) {
-            //     yValue1 = parseFloat(data.split("&")[0]);
-            //     yValue2 = parseFloat(data.split("&")[1]);
-            //     console.log("Temp: %s",yValue1)
-            //     console.log("------------------")
-            //     console.log("Humidity: %s",yValue2)
-            //     console.log("------------------")
-            // })
+  <body>
+    <div style="text-align: center;">
+        <strong>BÁO CÁO KHÓA LUẬN</strong>
+      <!-- <canvas id="myChart_temp" style="
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block; width: 80vw;"></canvas> -->
 
-            yValue1 = hub
-            // // console.log(yValue1)
-            yValue2 = temp
-        
-            // pushing the new values
-            dataPoints1.push({
-                x: time.getTime(),
-                y: yValue1
-            });
-            dataPoints2.push({
-                x: time.getTime(),
-                y: yValue2
-            });
+        <canvas id="myChart" style="
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block; width: 80vw;">
+        </canvas>
 
-            }
-        
-            // updating legend text with  updated with y Value 
-            chart.options.data[0].legendText = " Temperature  $" + yValue1;
-            chart.options.data[1].legendText = " Humidity  $" + yValue2; 
-            chart.render();
-        }
-        // generates first set of dataPoints 
-        updateChart(100);	
-        setInterval(function(){updateChart()}, updateInterval);
-        }
-    </script>
-    
-</head>
-<body>
-    <!-- <h1>Test MQTT</h1> -->
-    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
-    <div id="on" >
-        <input type="submit" value="ON" >
     </div>
 
+    <div style="text-align: center;">
+      <strong>BÁO CÁO KHÓA LUẬN</strong>
 
+      <canvas id="myChart_hum" style="
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block; width: 80vw;"></canvas>
+
+      </canvas>
+    </div>
+
+    <div id="on" >
+      <input type="submit" value="ON" >
+    </div>
     
     <div id="off">
         <input type="submit" value="OFF">
@@ -144,6 +61,8 @@
         <input type="submit" value="REVERSE" >
     </div>
 
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</body>
+    
+    
+    
+  </body>
 </html>
